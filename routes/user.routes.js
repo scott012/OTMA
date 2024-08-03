@@ -103,6 +103,7 @@ router.post('/login', (req, res) => {
   });
 });
 
+
 // Retrieve employee details
 router.get('/employee/:id', verifyToken, (req, res) => {
   const userId = req.params.id;

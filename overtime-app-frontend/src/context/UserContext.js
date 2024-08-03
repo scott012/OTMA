@@ -1,40 +1,42 @@
-// src/context/UserContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
+const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkUserLoggedIn = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await axios.get('http://localhost:5000/api/users/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          setUser(response.data);
-        } catch (error) {
-          console.error('Error fetching user:', error);
-        }
-      }
-    };
-    checkUserLoggedIn();
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get('http://localhost:5000/api/users/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(error => {
+        console.error('Failed to fetch user:', error);
+        logout();
+      });
+    }
   }, []);
 
-  const login = async (username, password) => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { username, password });
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.user);
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Error logging in:', error);
-    }
+  const login = (token) => {
+    localStorage.setItem('token', token);
+    axios.get('http://localhost:5000/api/users/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      setUser(response.data);
+      navigate('/dashboard'); // Ensure this line is present and correctly placed
+    })
+    .catch(error => {
+      console.error('Failed to fetch user:', error);
+      logout();
+    });
   };
 
   const logout = () => {
@@ -49,3 +51,5 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+export { UserContext, UserProvider };
