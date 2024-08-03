@@ -1,0 +1,52 @@
+
+### Follow-Up Questions
+
+1. **User Management**:
+    - How will new users be added to the system, and how will their roles be assigned? 
+		a. Admin users will be allowed to add and remove users and set their roles.
+    - Will there be any account management features for employees to update their passwords or contact information?
+		a. Users should be able to change their passwords and home email contact information, but not their work email address. Only admin users should be able to edit user's work email.
+
+2. **Email Notifications**:
+    - Should there be a way to customize the email content or template?
+		a. no need to.
+    - Do you need to track email delivery and open rates for audit purposes?
+		a. not at this time.
+
+3. **Shift Management**:
+    - How will the system handle conflicts if two employees select the same shift?
+		a. if both users ahve the same "charged" balance, then the most senior employee shall be awarded the shift.
+    - Will there be any mechanism for prioritizing shifts based on employee preferences or past selections?
+		a. no. the shifts are evaluted and awarded by order of occurence (date of shift).
+
+4. **Data Backup and Recovery**:
+    - What is the plan for data backup and recovery in case of system failures?
+		a. At this time, backups will be managed by the server. No need to worry about it for this prototype.
+    - Are there any specific compliance or data retention policies that need to be adhered to?
+		a. At this time, no.
+
+5. **User Interface**:
+    - Do you have any specific requirements or preferences for the user interface design?
+		a. It should be easy to read and understand the shifts being offered. Some colour, but not too much.
+    - Will there be mobile-specific optimizations for employees accessing the system from mobile devices?
+		a. Perhaps in the future. We may design a mobile app to access the system. This should be considered for future-proofing the system.
+
+6. **Auditing and Logging**:
+    - Should there be an audit trail of actions performed by admins and employees for security and compliance?
+		a. Not automated. Admins should be able to view the reports mentioned earlier to allow them to audit.
+    - What level of detail is required in the logs?
+		a. Nothing specific. I am open to suggestions.
+
+7. **Future Scalability**:
+    - Are there any anticipated features or expansions that should be considered during the initial design phase?
+		a. nothing that hasn't been mentioned already.
+    - How many users do you expect to be using the system concurrently?
+		a. Possibly 150? I'm not 100% sure.
+
+8. **Employee Feedback**:
+    - Will there be a feedback mechanism for employees to report issues or suggest improvements?
+		a. Not at this time. Maybe a future option.
+
+9. **Integration with Payroll**:
+    - Although no integration is currently planned, would integrating with payroll systems for automatic updates of awarded hours be beneficial in the future?
+		a. No. THis won't be possible.

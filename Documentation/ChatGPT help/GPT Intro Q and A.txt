@@ -1,0 +1,93 @@
+### User Roles and Permissions
+1. Describe the roles and permissions for each user type (e.g., Clerk, Employee).
+Admin: Responsible for inputting overtime offers, sending overtime offers and finalizing who receives the overtime.
+Employee: Logs into the system to review overtime offers, selects overtime offers and submits those selections.
+
+### Overtime Offer Details
+2. What information should be included in an overtime offer? (e.g., date, time, duration, location, type of work)
+Date, start time, end time, duration, if the offer is contiguous to an existing shift ("In-Early" or "Hold-Over") or if the shift is for an employee "Day-of-Rest") and an "apply by" date.
+
+3. What are the eligibility criteria for employees to receive an overtime offer? (e.g., job role, seniority, qualifications)
+All employees will be eligible.
+
+### Notification Process
+4. What triggers a notification to be sent to employees?
+After a clerk inputs all available overtime shifts, there should be an option for the clerk to push a button to send notifications.
+
+5. What method(s) will be used to send notifications? (e.g., email, SMS)
+Email only. The email will go to both an employee's work email and home email.
+
+6. What information should be included in the notification?
+A table of new offers that the employees haven't already recieved. The table should include: Date, start time, end time, duration, if the offer is contiguous to an existing shift ("In-Early" or "Hold-Over") or if the shift is for an employee "Day-of-Rest").
+
+### Employee Selection Process
+7. How will employees authenticate when logging in? (e.g., email/password, SSO)
+The employees should be given userids and passwords. The userid will be created by the employer.
+
+8. How should available offers be displayed to employees? (e.g., list, calendar view)
+On the webpage, a list of available shifts in a calendar view with selection buttons next to each available shift for the employee to select.
+
+9. How will employees indicate their interest in an offer? (e.g., checkboxes, dropdowns)
+Checkboxes in the calendar view.
+
+10. What happens after an employee selects an offer? (e.g., confirmation email, status update)
+All offers will be reviewed by the clerk on a specified date which was sent out with the original email notification. A confirmation email can be sent to the employee stating which shifts they applied for.
+
+### Data Handling and Security
+11. Where and how will data be stored? (e.g., database, cloud storage)
+Currently, I am testing this project in a MySQL database. The organization may have a different database backend to use, but we'll deal with that at a later date.
+
+12. What measures will be taken to ensure employee data privacy and security?
+The application must all be run on server-side to ensure security. Including security for javascript is essential.
+
+13. How will access to data be controlled based on user roles?
+"Employees" will have read-only access. "Admin" will have full read-write access. User's may hold both access levels.
+
+### Workflow and Notifications
+14. Describe the steps from input to notification for creating an overtime offer.
+a. An admin user enters the information required in question 2 to create the available overtime shifts. There may be more than one shift, so the admin user should identify how many of the same shift exists. For example: August 1, 2024, 08:00 - 14:00, 6 hours, DR Overtime, 3 available instances.
+b. After the admin user enters in the available shifts, the admin user saves the entries.
+c. The admin user can press a "Notify Employees of New Offer(s)" button.
+
+15. Describe how employee responses to offers are tracked and managed.
+All offers, responses, "charged hours" and "awarded hours" need to be tracked in the database. Charged hours are hours the employee is eligible to work, but declined to accept. Awarded hours are the hours actually accepted and given to the employee. Not all offers are charged as the employee may be scheduled leave for the period offered. The admin user will be responsible for determining if employees are charged hours or not.
+
+16. Are any reports or logs needed for tracking offers and responses?
+Yes, reports should be able to be generated showing:
+All Employees Report: UserID, Charged Hours, Accepted Hours
+Individual Employees Report: A list of Offers, Responses, Charged Hours and Awarded Shifts based on the fiscal year, April 1 - May 31.
+
+### Additional Features (Optional)
+17. Are there rules for automatically assigning offers if multiple employees show interest? If so, describe them.
+April 1 of every year, all employees' overtime balances are set to 0.
+Initial overtime offers are based on seniority.
+For every offer, an employee will be "charged" hours, unless they are not eligible to work a shift (if they are on leave the day of the shift, for example).
+An employee will not be charged hours if an employee with fewer charged hours accepts a shift.
+The employee with the fewest charged hours will be awarded the shift.
+
+18. Will there be reminder notifications for unselected offers? If so, describe them.
+No.
+
+19. Will the system need to integrate with existing systems or databases? If so, describe the integration points.
+No.
+
+### Example Scenarios
+**Scenario 1: Creating an Overtime Offer**
+20. Describe the step-by-step process for a clerk to create an overtime offer.
+a. A clerk is given a list of overtime shifts to enter into the system.
+b. The clerk signs in as an admin. The clerk enters instances of all overtime shifts. There may be many, or just one.
+c. Once the clerk has inputted the shifts, the clerk saves the entries.
+d. The clerk presses "Notify Employees of New Overtime Shifts Available" button.
+
+**Scenario 2: Employee Selection**
+21. Describe the step-by-step process for an employee to select an overtime offer.
+a. Employee receives an email stating new overtime shifts are available to be selected.
+b. Employee logs into website from desktop or mobile device.
+c. Employee reviews a calendar view of the available shifts. If previous shifts exists, but the "apply by" date has passed, they should not be visible on the calendar view. The employee does not need to see multiple instances of the same shift offering. 
+d. Employee selects shifts they would like to accept by checking checkboxes in the calendar view.
+e. Employee presses a "Submit" button.
+f. A confirmation page with the shifts they have selected should be shown.
+g. Employee reviews their selection(s) and presses a "Confirm" button.
+
+
+If an employee wants to cancel a shift they've accepted and have been awarded, they should be able to log into the system and be shown a list of shifts they have accepted. They can choose to cancel any of these shifts up to 24 hours before the awarded shift is to happen. In this case, an email should be send to a common email box to be determined at a later day to notify the admin users. If the awarded shift is less than 24 hours away, the employee should be notified to contact their manager to inform them of the cancellation. 

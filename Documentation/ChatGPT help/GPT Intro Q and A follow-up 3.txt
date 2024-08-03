@@ -1,0 +1,60 @@
+
+### Final Follow-Up Questions
+
+1. **User Management**:
+    - How will admin users be authenticated? Is there a higher level of security for admin accounts compared to regular users?
+		a. No, admin users will be "super-users". 
+
+2. **Email Notifications**:
+    - If no provision is needed now for customizing email content or tracking deliveries, should we at least ensure the system architecture can accommodate these features if future requirements change?
+		Let's not worry about this right now.
+
+3. **Shift Management**:
+    - For entering employees' "continuous service dates," should this be a one-time setup or periodically updated? Will there be a need for any verification or validation process for these dates?
+		a. it will be a one-time step when the user is created by the admin user.
+
+4. **Data Backup and Recovery**:
+    - Since you're not sure about the agency's backup frequency, do you want to include a basic backup plan within the application to ensure data safety (e.g., daily backups stored locally)?
+		a. not at this time.
+
+5. **User Interface**:
+    - Emulating the look and feel of the CBSA website is clear. Are there any specific accessibility requirements or standards (e.g., WCAG) that need to be followed?
+		a. it may need to be english & french in the future, but we'll only create it in english right now. No other accessibility requirements exist right now.
+
+6. **Auditing and Logging**:
+    - Even though detailed logging isn't required, should there be minimal logging for critical actions like password changes, shift selections, and account creations for accountability?
+		a. no.
+
+7. **Future Scalability**:
+    - With the potential for future feature requests, should we incorporate a modular design from the start to make adding new features easier?
+		a. Yes please!
+
+### Suggestions
+
+1. **Security**:
+    - Even if not required now, consider a modular approach for implementing security features like RBAC and encryption so that these can be added with minimal changes if needed in the future.
+		a. yes please.
+
+2. **Email Notifications**:
+    - Implementing a modular email notification system now can save time and effort if customization or tracking features become necessary later.
+		a. yes please.
+
+3. **User Interface**:
+    - Since user tech-savviness varies, incorporating user feedback mechanisms in the interface design phase can help tailor the usability to meet the needs of all users.
+		a. not at this time.
+
+4. **Logging and Auditing**:
+    - Basic logging should include critical actions to help with troubleshooting and ensuring accountability without overwhelming the system with unnecessary logs.
+		a. not at this time. maybe in the future.
+
+5. **Scalability**:
+    - Planning for modular design and horizontal scaling now will ensure the system can grow and adapt to future demands without requiring significant overhauls.
+		a. yes please!
+
+### Implementation Steps
+
+1. **User Authentication**: Implement robust authentication mechanisms for both admin and regular users.
+2. **Email Notification System**: Develop a modular system for sending emails, allowing easy future customization and tracking.
+3. **User Interface Design**: Create a responsive and accessible design that mirrors the CBSA website, incorporating user feedback for ease of use.
+4. **Data Handling**: Ensure data backup and recovery plans are in place, with minimal logging for critical actions.
+5. **Future-Proofing**: Design the system architecture to be modular and scalable, accommodating future feature additions and increased load.

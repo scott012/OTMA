@@ -1,0 +1,3 @@
+npx nodemon serever.js - start server
+
+npx nodemon server.js

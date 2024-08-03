@@ -1,0 +1,49 @@
+.overtime-offers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+.overtime-offers-table th,
+.overtime-offers-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.overtime-offers-table th {
+  background-color: #f4f4f4;
+}
+
+.overtime-offers-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.overtime-offers-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.error-message {
+  color: red;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

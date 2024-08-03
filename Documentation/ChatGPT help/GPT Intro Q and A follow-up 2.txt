@@ -1,0 +1,61 @@
+
+### Follow-Up Questions
+
+1. **User Management**:
+    - For the admin to add and remove users, should there be any additional security measures, like two-factor authentication, for these actions?
+		a. no.
+
+2. **Email Notifications**:
+    - Even though there's no need to customize email content or track deliveries now, should there be a provision to easily implement these features later if needed?
+		a. no.
+
+3. **Shift Management**:
+    - In cases where seniority is the deciding factor for awarding shifts, how will the system access or calculate the seniority of employees? Is this information available in your current system?
+		a. We can allow the admin to enter employees' "continuous service dates" to determine seniority.
+
+4. **Data Backup and Recovery**:
+    - Since backups are managed by the server, is there a specific frequency or method for these backups (e.g., daily, weekly, incremental)?
+		a. I'm not sure what the agency's backup frequency is.
+
+5. **User Interface**:
+    - For the easy-to-read interface with some color, do you have any specific color preferences or themes in mind that should be followed?
+    - Are there any existing UI/UX guidelines or branding standards that need to be adhered to?
+		a. if we could emulate the look and feel of https://www.cbsa-asfc.gc.ca/menu-eng.html
+
+6. **Auditing and Logging**:
+    - Should the logs include actions like user login/logout times, shift selections, and any modifications to user data for basic security and troubleshooting?
+    - How long should logs and audit trails be retained?
+		a. no need to log too much. this system is not too sensitive.
+
+7. **Future Scalability**:
+    - Considering the possibility of 150 concurrent users, do you anticipate needing load balancing or performance optimization strategies right from the initial deployment?
+		a. no. there won't be too much information going back and forth at once. No transactions are time sensitive, so there should be no data collisions.
+
+8. **Employee Feedback**:
+    - While a feedback mechanism is not required now, would a simple email link for feedback suffice if added in the future?
+		a. no need.
+
+### Suggestions
+
+1. **Security**:
+    - Consider implementing role-based access control (RBAC) for more granular permissions management.
+    - Evaluate the need for encryption, both in transit and at rest, to protect sensitive data.
+		a. no need at this point.
+
+2. **Email Notifications**:
+    - Design the email notification feature in a modular way, making it easier to expand and add tracking or customization features later if needed.
+		a. I don't think this will be needed, but if it's easy to implement, then let's plan for it.
+
+3. **User Interface**:
+    - Use responsive design principles to ensure the application works well on both desktops and mobile devices, even before developing a dedicated mobile app.
+    - Include tooltips or help icons to assist users in understanding different features and options.
+		a. I am for making it as easy for the user to use as possible. The users of this system will range from tech savvy people to people who know nothing about computers.
+
+4. **Logging and Auditing**:
+    - Implement basic logging from the start, including user actions and system events. This can help in diagnosing issues and ensuring accountability.
+    - Consider using a logging framework that allows for easy expansion of logging details if required in the future.
+
+5. **Scalability**:
+    - Design the database and application architecture to handle growth, including efficient querying and indexing strategies.
+		a. Definitley need to account for this. Once management sees what we're capable of, they may ask for more features to be added.
+    - Plan for horizontal scaling of the web application to handle increased load, including potential use of cloud services.
