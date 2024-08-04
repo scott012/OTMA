@@ -1,51 +1,39 @@
-.create-overtime-offer-container {
+.create-overtime-offer {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
 }
 
-.create-overtime-offer-form {
+.create-overtime-offer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-overtime-offer form {
   display: flex;
   flex-direction: column;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
+.create-overtime-offer form input,
+.create-overtime-offer form select,
+.create-overtime-offer form button {
   margin-bottom: 15px;
-}
-
-.form-group label {
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-}
-
-.create-overtime-offer-form button {
   padding: 10px;
-  border: none;
-  border-radius: 4px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create-overtime-offer form button {
   background-color: #007bff;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.create-overtime-offer-form button:hover {
+.create-overtime-offer form button:hover {
   background-color: #0056b3;
-}
-
-.error-message {
-  color: red;
-  margin-bottom: 10px;
 }

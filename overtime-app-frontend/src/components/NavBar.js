@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import './NavBar.css'; // Ensure this line is present to include the CSS
 
 const NavBar = () => {
   const { user, logout } = useContext(UserContext);
@@ -14,7 +15,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
+    <nav className="navbar">
       <ul>
         {user && (
           <>

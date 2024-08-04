@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import './CreateOvertimeOffer.css';
 
 const CreateOvertimeOffer = () => {
   const [description, setDescription] = useState('');
@@ -13,10 +14,11 @@ const CreateOvertimeOffer = () => {
   const [instances, setInstances] = useState(1);
   const [locations, setLocations] = useState([]);
   const [descriptions, setDescriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    // Fetch work locations and descriptions
     const fetchData = async () => {
       try {
         const locationsResponse = await axios.get('http://localhost:5000/api/work-locations', {
@@ -29,7 +31,6 @@ const CreateOvertimeOffer = () => {
         });
         setDescriptions(descriptionsResponse.data);
 
-        // Default to admin user's work location
         if (user) {
           const adminLocation = locationsResponse.data.find(location =>
             location.region === user.region &&
@@ -44,6 +45,9 @@ const CreateOvertimeOffer = () => {
         }
       } catch (error) {
         console.error('Failed to fetch data:', error);
+        setError('Failed to fetch data. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -63,50 +67,62 @@ const CreateOvertimeOffer = () => {
         work_location: workLocation,
         instances,
       });
-      // Handle successful offer creation
+      alert('Overtime offer created successfully');
     } catch (error) {
       console.error('Error creating overtime offer:', error);
+      setError('Error creating overtime offer. Please try again later.');
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <div>
+    <div className="create-overtime-offer">
       <h2>Create Overtime Offer</h2>
       <form onSubmit={handleSubmit}>
-        <select value={description} onChange={(e) => setDescription(e.target.value)}>
+        <select value={description} onChange={(e) => setDescription(e.target.value)} required>
           <option value="" disabled>Select Description</option>
-          {descriptions.map((desc, index) => (
-            <option key={index} value={desc}>{desc}</option>
+          {descriptions.map((desc) => (
+            <option key={desc.id} value={desc.description}>{desc.description}</option>
           ))}
         </select>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          required
         />
         <input
           type="time"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
+          required
         />
         <input
           type="time"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
+          required
         />
-        <select value={region} onChange={(e) => setRegion(e.target.value)}>
+        <select value={region} onChange={(e) => setRegion(e.target.value)} required>
           <option value="" disabled>Select Region</option>
           {locations.map((location, index) => (
             <option key={index} value={location.region}>{location.region}</option>
           ))}
         </select>
-        <select value={district} onChange={(e) => setDistrict(e.target.value)}>
+        <select value={district} onChange={(e) => setDistrict(e.target.value)} required>
           <option value="" disabled>Select District</option>
           {locations.filter(location => location.region === region).map((location, index) => (
             <option key={index} value={location.district}>{location.district}</option>
           ))}
         </select>
-        <select value={workLocation} onChange={(e) => setWorkLocation(e.target.value)}>
+        <select value={workLocation} onChange={(e) => setWorkLocation(e.target.value)} required>
           <option value="" disabled>Select Work Location</option>
           {locations.filter(location => location.region === region && location.district === district).map((location, index) => (
             <option key={index} value={location.work_location}>{location.work_location}</option>
@@ -117,6 +133,7 @@ const CreateOvertimeOffer = () => {
           min="1"
           value={instances}
           onChange={(e) => setInstances(e.target.value)}
+          required
         />
         <button type="submit">Create Offer</button>
       </form>

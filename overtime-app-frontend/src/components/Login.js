@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import './Login.css';
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(UserContext);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', {
@@ -22,9 +24,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Username"
