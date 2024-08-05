@@ -21,14 +21,15 @@
 
 .navbar ul li {
   display: inline;
+  margin: 0;
 }
 
 .navbar ul li a,
 .navbar ul li button {
   color: white;
   text-decoration: none;
-  padding: 8px 16px;
-  display: inline-block;
+  padding: 10px 20px;
+  display: block;
 }
 
 .navbar ul li button {

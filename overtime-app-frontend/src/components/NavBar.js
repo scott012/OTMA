@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,14 +8,20 @@ import './NavBar.css'; // Ensure this line is present to include the CSS
 const NavBar = () => {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
+  const navRef = useRef(null);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  useEffect(() => {
+    const navHeight = navRef.current.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--nav-height', `${navHeight}px`);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={navRef}>
       <ul>
         {user && (
           <>

@@ -4,41 +4,47 @@ const db = require('../db/db.js');
 const verifyToken = require('../middleware/auth.js');
 const roleCheck = require('../middleware/roleCheck.js');
 
-// Fetch all overtime offers
+// Fetch all overtime offers with aggregation
 router.get('/offers', verifyToken, (req, res) => {
-  const query = 'SELECT * FROM overtime_offers';
+  try{
+  const query = `
+    SELECT 
+        DATE_FORMAT(oo.date, '%d-%b-%Y') AS date,
+        DATE_FORMAT(oo.start_time, '%H:%i') AS start_time,
+        DATE_FORMAT(oo.end_time, '%H:%i') AS end_time, 
+        ROUND(TIMESTAMPDIFF(MINUTE, oo.start_time, oo.end_time) / 60, 2) AS duration,  
+        wl.region, 
+        wl.district, 
+        wl.work_location, 
+        od.description, 
+        COUNT(*) as instances 
+      FROM 
+        overtime_offers oo 
+        JOIN overtime_descriptions od ON oo.description_id = od.id 
+        JOIN work_locations wl ON oo.work_location_id = wl.id
+      GROUP BY 
+        oo.date, 
+        oo.start_time, 
+        oo.end_time, 
+        wl.region, 
+        wl.district, 
+        wl.work_location, 
+        od.description
+      ORDER BY 
+        oo.date ASC
+    `;
 
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error("Error fetching overtime offers:", error.message);
-      return res.status(500).send("Error fetching overtime offers: " + error.message);
-    }
-    res.json(results);
-  });
-});
-
-// Create an overtime offer
-router.post('/create-offer', verifyToken, roleCheck('admin'), (req, res) => {
-  const { description_id, date, start_time, end_time, region, district, work_location, instances } = req.body;
-
-  if (!description_id || !date || !start_time || !end_time || !region || !district || !work_location || !instances) {
-    return res.status(400).send("All fields are required.");
+    db.query(query, (error, results) => {
+      if (error) {
+        console.error("Error fetching overtime offers:", error.message);
+        return res.status(500).send("Error fetching overtime offers: " + error.message);
+      }
+      res.json(results);
+    });
+  } catch (error) {
+    console.error("Error fetching overtime offers:", error.message);
+    res.status(500).send("Error fetching overtime offers: " + error.message);
   }
-
-  const offers = [];
-  for (let i = 0; i < instances; i++) {
-    offers.push([description_id, date, start_time, end_time, region, district, work_location]);
-  }
-
-  const query = 'INSERT INTO overtime_offers (description_id, date, start_time, end_time, region, district, work_location) VALUES ?';
-
-  db.query(query, [offers], (error, results) => {
-    if (error) {
-      console.error("Error creating overtime offer:", error.message);
-      return res.status(500).send("Error creating overtime offer: " + error.message);
-    }
-    res.status(201).send("Overtime offer(s) created successfully!");
-  });
 });
 
 // Express interest in an overtime offer

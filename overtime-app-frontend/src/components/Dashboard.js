@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -29,6 +30,7 @@ const Dashboard = () => {
     return <p>Loading...</p>;
   }
 
+ 
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>

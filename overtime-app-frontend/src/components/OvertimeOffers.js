@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './OvertimeOffers.css';
+import { UserContext } from '../context/UserContext';
 
 const OvertimeOffers = () => {
   const [offers, setOffers] = useState([]);
+  const { user } = useContext(UserContext);
+  const [descriptions, setDescriptions] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
+
+    // Fetch descriptions
+    const fetchDescriptions = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/overtime-descriptions', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        setDescriptions(response.data);
+      } catch (error) {
+        console.error('Failed to fetch descriptions:', error);
+      }
+    };
+
     const fetchOffers = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -19,8 +35,14 @@ const OvertimeOffers = () => {
       }
     };
 
+    fetchDescriptions();
     fetchOffers();
   }, []);
+
+  const getDescriptionText = (descriptionId) => {
+    const description = descriptions.find(desc => desc.id === descriptionId);
+    return description ? description.description : 'Unknown Description';
+  };
 
   return (
     <div>
@@ -44,15 +66,15 @@ const OvertimeOffers = () => {
         <tbody>
           {offers.map((offer) => (
             <tr key={offer.id}>
-              <td>{offer.description_id}</td>
-              <td>{new Date(offer.date).toLocaleDateString()}</td>
+              <td>{getDescriptionText(offer.description_id)}</td>
+              <td>{offer.date}</td>
               <td>{offer.start_time}</td>
               <td>{offer.end_time}</td>
-              <td>{(new Date(`1970-01-01T${offer.end_time}Z`) - new Date(`1970-01-01T${offer.start_time}Z`)) / (1000 * 60 * 60)}</td>
+              <td>{!isNaN(offer.duration) ? offer.duration : 'N/A'}</td>
               <td>{offer.region}</td>
               <td>{offer.district}</td>
               <td>{offer.work_location}</td>
-              <td>{offer.instances}</td>
+              <td>{!isNaN(offer.instances) ? offer.instances : 'N/A'}</td>
               <td>
                 <button>Express Interest</button>
               </td>

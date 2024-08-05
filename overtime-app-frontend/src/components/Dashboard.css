@@ -1,0 +1,12 @@
+/* src/components/Dashboard.css */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+  margin: 0;
+  margin-top: 100px; /* Adjust this value based on the actual height of your navbar */
+  height: 100vh; /* Ensure the container takes full height of the viewport */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
