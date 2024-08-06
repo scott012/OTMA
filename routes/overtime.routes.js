@@ -47,6 +47,30 @@ router.get('/offers', verifyToken, (req, res) => {
   }
 });
 
+// Create an overtime offer
+router.post('/create', verifyToken, roleCheck('admin'), async (req, res) => {
+  const { description_id, date, start_time, end_time, respond_by, region, district, work_location, instances } = req.body;
+
+  if (!description_id || !date || !start_time || !end_time || !respond_by || !region || !district || !work_location || !instances) {
+    return res.status(400).send("All fields are required.");
+  }
+
+  const offers = [];
+  for (let i = 0; i < instances; i++) {
+    offers.push([description_id, date, start_time, end_time, respond_by, region, district, work_location]);
+  }
+
+  const query = 'INSERT INTO overtime_offers (description_id, date, start_time, end_time, respond_by, region, district, work_location) VALUES ?';
+
+  db.query(query, [offers], (error, results) => {
+    if (error) {
+      console.error("Error creating overtime offer:", error.message);
+      return res.status(500).send("Error creating overtime offer: " + error.message);
+    }
+    res.status(201).send("Overtime offer(s) created successfully!");
+  });
+});
+
 // Express interest in an overtime offer
 router.post('/express-interest', verifyToken, (req, res) => {
   const { offer_id } = req.body;

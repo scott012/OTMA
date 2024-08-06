@@ -1,5 +1,5 @@
 .create-overtime-offer {
-  max-width: 500px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -14,20 +14,39 @@
 
 .create-overtime-offer form {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.create-overtime-offer form div {
+  flex: 0 0 48%; /* Each column takes 48% width */
+  margin-bottom: 15px;
+  display: flex;
   flex-direction: column;
 }
 
+.create-overtime-offer form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
 .create-overtime-offer form input,
-.create-overtime-offer form select,
-.create-overtime-offer form button {
-  margin-bottom: 15px;
+.create-overtime-offer form select {
+  width: 100%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 .create-overtime-offer form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   background-color: #007bff;
   color: white;
   cursor: pointer;

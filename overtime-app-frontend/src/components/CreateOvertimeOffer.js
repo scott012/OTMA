@@ -8,6 +8,7 @@ const CreateOvertimeOffer = () => {
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [respondBy, setRespondBy] = useState('');
   const [region, setRegion] = useState('');
   const [district, setDistrict] = useState('');
   const [workLocation, setWorkLocation] = useState('');
@@ -62,6 +63,7 @@ const CreateOvertimeOffer = () => {
         date,
         start_time: startTime,
         end_time: endTime,
+        respond_by: respondBy,
         region,
         district,
         work_location: workLocation,
@@ -86,56 +88,95 @@ const CreateOvertimeOffer = () => {
     <div className="create-overtime-offer">
       <h2>Create Overtime Offer</h2>
       <form onSubmit={handleSubmit}>
-        <select value={description} onChange={(e) => setDescription(e.target.value)} required>
-          <option value="" disabled>Select Description</option>
-          {descriptions.map((desc) => (
-            <option key={desc.id} value={desc.description}>{desc.description}</option>
-          ))}
-        </select>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-        <input
-          type="time"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-          required
-        />
-        <input
-          type="time"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-          required
-        />
-        <select value={region} onChange={(e) => setRegion(e.target.value)} required>
-          <option value="" disabled>Select Region</option>
-          {locations.map((location, index) => (
-            <option key={index} value={location.region}>{location.region}</option>
-          ))}
-        </select>
-        <select value={district} onChange={(e) => setDistrict(e.target.value)} required>
-          <option value="" disabled>Select District</option>
-          {locations.filter(location => location.region === region).map((location, index) => (
-            <option key={index} value={location.district}>{location.district}</option>
-          ))}
-        </select>
-        <select value={workLocation} onChange={(e) => setWorkLocation(e.target.value)} required>
-          <option value="" disabled>Select Work Location</option>
-          {locations.filter(location => location.region === region && location.district === district).map((location, index) => (
-            <option key={index} value={location.work_location}>{location.work_location}</option>
-          ))}
-        </select>
-        <input
-          type="number"
-          min="1"
-          value={instances}
-          onChange={(e) => setInstances(e.target.value)}
-          required
-        />
-        <button type="submit">Create Offer</button>
+        <div>
+          <label>Description:</label>
+          <select value={description} onChange={(e) => setDescription(e.target.value)}>
+            <option value="" disabled>Select Description</option>
+            {descriptions.map((desc, index) => (
+              <option key={index} value={desc.id}>{desc.description}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label>Date:</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <label>Start Time:</label>
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <label>End Time:</label>
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <label>Region:</label>
+          <select value={region} onChange={(e) => setRegion(e.target.value)}>
+            <option value="" disabled>Select Region</option>
+            {locations.map((location, index) => (
+              <option key={index} value={location.region}>{location.region}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label>District:</label>
+          <select value={district} onChange={(e) => setDistrict(e.target.value)}>
+            <option value="" disabled>Select District</option>
+            {locations.filter(location => location.region === region).map((location, index) => (
+              <option key={index} value={location.district}>{location.district}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label>Work Location:</label>
+          <select value={workLocation} onChange={(e) => setWorkLocation(e.target.value)}>
+            <option value="" disabled>Select Work Location</option>
+            {locations.filter(location => location.region === region && location.district === district).map((location, index) => (
+              <option key={index} value={location.work_location}>{location.work_location}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label>Instances:</label>
+          <input
+            type="number"
+            min="1"
+            value={instances}
+            onChange={(e) => setInstances(e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <label>Respond By:</label>
+          <input
+            type="datetime-local"
+            value={respondBy}
+            onChange={(e) => setRespondBy(e.target.value)}
+          />
+        </div>
+        
+        <div style={{ flex: '0 0 100%' }}>
+          <button type="submit">Create Offer</button>
+        </div>
       </form>
     </div>
   );
